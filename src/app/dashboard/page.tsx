@@ -1,35 +1,63 @@
 "use client"
 import { useState, useEffect } from 'react';
+import { SCHOOL_INFO } from "../../config";
+
 export default function DashboardPage() {
-  const [schoolName, setSchoolName] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [role, setRole] = useState<string>("student");
+
   useEffect(() => {
-    const saved = localStorage.getItem('schoolName');
-    if (saved) setSchoolName(saved);
+    const savedRole = localStorage.getItem('userRole') || 'student';
+    setRole(savedRole);
   }, []);
-  const saveName = () => {
-    if (inputValue.trim() !== '') {
-      localStorage.setItem('schoolName', inputValue);
-      setSchoolName(inputValue);
-      setInputValue('');
-    }
-  };
-  if (!schoolName) {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f3f4f6' }}>
-        <div style={{ background: 'white', padding: '30px', borderRadius: '12px', width: '380px', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '22px', fontWeight: 'bold' }}>Welcome! 🏫</h1>
-          <p style={{ color: 'gray' }}>What is your school name?</p>
-          <input type="text" placeholder="e.g. Grace High School" value={inputValue} onChange={(e) => setInputValue(e.target.value)} style={{ width: '100%', marginTop: '20px', padding: '12px', border: '1px solid #ddd', borderRadius: '8px' }} />
-          <button onClick={saveName} style={{ width: '100%', marginTop: '12px', background: '#2563eb', color: 'white', padding: '12px', borderRadius: '8px', fontWeight: 'bold', border: 'none' }}>Save & Continue</button>
-        </div>
-      </div>
-    );
-  }
+
   return (
-    <div style={{ minHeight: '100vh', padding: '40px', background: '#f3f4f6' }}>
-      <h1 style={{ fontSize: '28px', fontWeight: 'bold' }}>Welcome to {schoolName} 🎓</h1>
-      <a href="/login" style={{ color: 'blue' }}>Logout</a>
+    <div style={{ minHeight: '100vh', background: '#f3f4f6' }}>
+      {/* HEADER - Fixed School Name */}
+      <div style={{ background: '#1e3a8a', color: 'white', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 style={{ fontWeight: 'bold', fontSize: '18px' }}>{SCHOOL_INFO.name}</h1>
+        <span style={{ background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: '20px', fontSize: '12px' }}>{role.toUpperCase()}</span>
+      </div>
+
+      <div style={{ padding: '32px' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>Dashboard</h2>
+        <p style={{ color: 'gray' }}>Welcome to {SCHOOL_INFO.name} Portal</p>
+
+        {/* ROLE BASED CONTROL */}
+        <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+          
+          {/* Everyone can see this */}
+          <div style={{ background: 'white', padding: '20px', borderRadius: '12px' }}>
+            <h3>📢 Announcements</h3>
+            <p style={{ fontSize: '14px', color: 'gray' }}>Visible to ALL - {role}</p>
+          </div>
+
+          {/* Only student & staff & admin */}
+          {(role === 'student' || role === 'staff' || role === 'admin') && (
+            <div style={{ background: 'white', padding: '20px', borderRadius: '12px' }}>
+              <h3>📝 My Results</h3>
+              <p style={{ fontSize: '14px', color: 'gray' }}>Student sees only his result</p>
+            </div>
+          )}
+
+          {/* Only staff & admin */}
+          {(role === 'staff' || role === 'admin') && (
+            <div style={{ background: 'white', padding: '20px', borderRadius: '12px', border: '2px solid #fbbf24' }}>
+              <h3>👨‍🏫 Staff Only: Mark Attendance</h3>
+              <p style={{ fontSize: '14px', color: 'gray' }}>Students will NOT see this card</p>
+            </div>
+          )}
+
+          {/* Only admin */}
+          {role === 'admin' && (
+            <div style={{ background: 'white', padding: '20px', borderRadius: '12px', border: '2px solid #ef4444' }}>
+              <h3>⚙️ Admin Only: Manage Fees & Staff</h3>
+              <p style={{ fontSize: '14px', color: 'gray' }}>Only Admin sees this</p>
+            </div>
+          )}
+        </div>
+
+        <a href="/login" style={{ display: 'inline-block', marginTop: '30px', color: 'blue' }}>Logout</a>
+      </div>
     </div>
   )
 }
