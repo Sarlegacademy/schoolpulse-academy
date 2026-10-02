@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import { SCHOOL_INFO } from "@/config"
@@ -76,6 +77,13 @@ export default function AboutPage() {
       </div>
 
       <Footer/>
+=======
+export default function AboutPage() {
+  return (
+    <div style={{padding:40}}>
+      <h1 style={{fontSize:32, fontWeight:'bold'}}>About Us</h1>
+      <p>SchoolPulse Academy is committed to excellence.</p>
+>>>>>>> 57993c1e8a7e11c4c9b24c6861b944bc2b45265c
     </div>
   )
 }
