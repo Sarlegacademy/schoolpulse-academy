@@ -1,8 +1,11 @@
 export const SCHOOL_INFO = {
   name: "SARVERUN LEGACY ACADEMY, CHITO",
-  shortName: "SLA CHITO",
-  location: "Chito",
-  motto: "Legacy of Excellence"
-}
+  motto: "Excellence in Education",
+  address: "Lagos, Nigeria",
+  phone: "+234 800 000 0000",
+  email: "info@SARVERUN LEGACY ACADEMY.edu",
+};
 
-export const ROLES = ["student", "staff", "admin"] as const
+export const siteConfig = {
+  name: "SARVERUN LEGACY ACADEMY, CHITO",
+};

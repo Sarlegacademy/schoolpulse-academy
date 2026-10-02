@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SchoolPulse Academy",
+  title: "SARVERUN LEGACY ACADEMY, CHITO",
   description: "School Management System",
 };
 
